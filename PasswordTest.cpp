@@ -41,12 +41,33 @@ TEST(PasswordTest, number_password)
 {
 	Password my_password;
 	int actual = my_password.count_leading_characters("9Z");
-	ASSERT_EQ(2, actual);
+	ASSERT_EQ(1, actual);
 }
 
 TEST(PasswordTest, one_mixed_password)
 {
 	Password my_password;
 	bool actual = my_password.has_mixed_case("Zz");
-	ASSERT_EQ(2, actual);
+	ASSERT_TRUE(actual);
+}
+
+TEST(PasswordTest, no_upper_mixed_password)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("ZZ");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, no_lower_mixed_password)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("zz");
+	ASSERT_FALSE(actual);
+}
+
+TEST(PasswordTest, mixed_password)
+{
+	Password my_password;
+	bool actual = my_password.has_mixed_case("zZ");
+	ASSERT_TRUE(actual);
 }
