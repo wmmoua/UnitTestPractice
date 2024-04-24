@@ -1,6 +1,7 @@
 #include "Password.h"
 #include <string>
 #include <cctype>
+#include <algorithm>
 
 using std::string;
 
@@ -106,4 +107,29 @@ bool Password::has_mixed_case(string str){
   }
   return false;
   */
+}
+
+// Constructor
+Password::Password() {
+  pass_history.push_back("ChicoCA-95929");
+}
+
+// Set method
+void Password::set(string newPassword) {
+  if (newPassword.length() >= 8 && newPassword.length() <= 20 &&
+  count_leading_characters(newPassword) <= 3 &&
+  has_mixed_case(newPassword) &&
+  std::find(pass_history.begin(), pass_history.end(), newPassword) == pass_history.end()) {
+    pass_history.push_back(newPassword);
+  } else {
+    pass_history.push_back("ChicoCA-95929");
+  }
+}
+
+bool Password::authenticate(string attempt) {
+  if (pass_history.empty()) {
+    return false;
+  }
+  string latestPassword = pass_history.back();
+  return (attempt == latestPassword);
 }
